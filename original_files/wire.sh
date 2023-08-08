@@ -100,7 +100,7 @@ new_client_dns () {
 	echo "   4) OpenDNS"
 	echo "   5) Quad9"
 	echo "   6) AdGuard"
-	read -p "DNS server [1]: " dns
+	read -p "DNS server [1]: " -e -i 2 dns
 	until [[ -z "$dns" || "$dns" =~ ^[1-6]$ ]]; do
 		echo "$dns: invalid selection."
 		read -p "DNS server [1]: " dns
@@ -207,7 +207,7 @@ if [[ ! -e /etc/wireguard/wg0.conf ]]; then
 		echo "This server is behind NAT. What is the public IPv4 address or hostname?"
 		# Get public IP and sanitize with grep
 		get_public_ip=$(grep -m 1 -oE '^[0-9]{1,3}(\.[0-9]{1,3}){3}$' <<< "$(wget -T 10 -t 1 -4qO- "http://ip1.dynupdate.no-ip.com/" || curl -m 10 -4Ls "http://ip1.dynupdate.no-ip.com/")")
-		read -p "Public IPv4 address / hostname [$get_public_ip]: " public_ip
+		read -p "Public IPv4 address / hostname: " -e -i "$get_public_ip" public_ip
 		# If the checkip service is unavailable and user didn't provide input, ask again
 		until [[ -n "$get_public_ip" || -n "$public_ip" ]]; do
 			echo "Invalid input."
@@ -235,11 +235,14 @@ if [[ ! -e /etc/wireguard/wg0.conf ]]; then
 	fi
 	echo
 	echo "What port should WireGuard listen to?"
-	read -p "Port [51820]: " port
-	until [[ -z "$port" || "$port" =~ ^[0-9]+$ && "$port" -le 65535 ]]; do
-		echo "$port: invalid port."
-		read -p "Port [51820]: " port
+	until [[ $port =~ ^[0-9]+$ ]] && [ "$port" -ge 1 ] && [ "$port" -le 65535 ]; do
+		read -rp "Custom port: " port
 	done
+	#read -p "Port [51820]: " port
+	#until [[ -z "$port" || "$port" =~ ^[0-9]+$ && "$port" -le 65535 ]]; do
+	#	echo "$port: invalid port."
+	#	read -p "Port [51820]: " port
+	#done
 	[[ -z "$port" ]] && port="51820"
 	echo
 	echo "Enter a name for the first client:"
@@ -253,7 +256,7 @@ if [[ ! -e /etc/wireguard/wg0.conf ]]; then
 	if [[ "$is_container" -eq 0 ]]; then
 		echo
 		echo "BoringTun will be installed to set up WireGuard in the system."
-		read -p "Should automatic updates be enabled for it? [Y/n]: " boringtun_updates
+		read -p "Should automatic updates be enabled for it? [Y/n]: " -e -i "Y" boringtun_updates
 		until [[ "$boringtun_updates" =~ ^[yYnN]*$ ]]; do
 			echo "$remove: invalid selection."
 			read -p "Should automatic updates be enabled for it? [Y/n]: " boringtun_updates
@@ -629,6 +632,7 @@ else
 				systemctl disable --now wg-quick@wg0.service
 				rm -f /etc/systemd/system/wg-quick@wg0.service.d/boringtun.conf
 				rm -f /etc/sysctl.d/99-wireguard-forward.conf
+				rm /root/*.conf
 				# Different packages were installed if the system was containerized or not
 				if [[ ! "$is_container" -eq 0 ]]; then
 					if [[ "$os" == "ubuntu" ]]; then

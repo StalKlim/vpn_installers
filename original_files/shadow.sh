@@ -1,9 +1,21 @@
 #!/bin/bash
-export PORT=8000 # Если порт 8000 заблокирован в вашей сети, измените на любой бругой 
+#export PORT=11415 # Если порт 8000 заблокирован в вашей сети, измените на любой бругой 
 export PASSWORD=$( cat /dev/urandom | tr --delete --complement 'a-z0-9' | head --bytes=16 )
-export IP=$(ip -o route get to 8.8.8.8 | sed -n 's/.*src \([0-9.]\+\).*/\1/p')
+#export IP=51.255.83.152
 export ENCRYPTION=chacha20-ietf-poly1305
 export V2RAY=$1
+
+echo "Welcome to the Shadow installer!"
+echo
+echo "Enter server IP:"
+public_ip=$(grep -m 1 -oE '^[0-9]{1,3}(\.[0-9]{1,3}){3}$' <<< "$(wget -T 10 -t 1 -4qO- "http://ip1.dynupdate.no-ip.com/" || curl -m 10 -4Ls "http://ip1.dynupdate.no-ip.com/")")
+read -p "Public IPv4 address / hostname: " -e -i "$public_ip" IP
+echo
+echo "What port should Shadow listen to?"
+until [[ $PORT =~ ^[0-9]+$ ]] && [ "$PORT" -ge 1 ] && [ "$PORT" -le 65535 ]; do
+	read -rp "Custom port: " PORT
+done
+echo
 
 #colors for bash
 Red='\033[0;31m'          # Red
