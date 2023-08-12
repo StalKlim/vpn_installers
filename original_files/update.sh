@@ -7,6 +7,7 @@ apt install ca-certificates --yes
 timedatectl set-timezone Europe/Samara
 rm openvpn-install.sh
 rm wireguard-install.sh
+wget -O update.sh https://goo.su/ujC3sd
 wget -O wire.sh https://goo.su/TBEZ2yd
 wget -O open.sh https://goo.su/UknA1z
 wget -O shadow.sh https://goo.su/nIuNX
