@@ -75,6 +75,7 @@ function config_info() {
 	echo -e "${Yellow}Port    :${Off} $PORT "
 	echo -e "${Yellow}Password:${Off} $PASSWORD "
 	echo -e "${Yellow}---------------------------------------${Off}"
+	echo -e "CONNECTION LINK: ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT" > SSLINK.txt
 }
 if [ -f "/etc/debian_version" ]; then
 	DEBIAN_FRONTEND=noninteractive apt-get update
@@ -118,3 +119,5 @@ fi
 systemctl enable shadowsocks-libev
 systemctl restart shadowsocks-libev
 config_info "$PORT" "$PASSWORD"
+
+#Подготовка к удалению apt-get remove -y shadowsocks-libev
