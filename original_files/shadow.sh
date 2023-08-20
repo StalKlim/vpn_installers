@@ -16,6 +16,9 @@ until [[ $PORT =~ ^[0-9]+$ ]] && [ "$PORT" -ge 1 ] && [ "$PORT" -le 65535 ]; do
 	read -rp "Custom port: " PORT
 done
 echo
+echo "Enter server name here (for example: FIN66/PL8)"
+read -rp "Server name: " SRVNAME
+echo
 
 #colors for bash
 Red='\033[0;31m'          # Red
@@ -75,7 +78,7 @@ function config_info() {
 	echo -e "${Yellow}Port    :${Off} $PORT "
 	echo -e "${Yellow}Password:${Off} $PASSWORD "
 	echo -e "${Yellow}---------------------------------------${Off}"
-	echo -e "CONNECTION LINK: ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT" > SSLINK.txt
+	echo -e "SHADOWSOCKS LINK: ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT \nИнструкция по установке и настройке ShadowSocks по ссылке https://telegra.ph/Nastrojka-VPN-na-razlichnyh-ustrojstvah-07-24" > "$SRVNAME".txt
 }
 if [ -f "/etc/debian_version" ]; then
 	DEBIAN_FRONTEND=noninteractive apt-get update
