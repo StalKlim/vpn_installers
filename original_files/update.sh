@@ -7,8 +7,8 @@ apt install ca-certificates --yes
 timedatectl set-timezone Europe/Samara
 rm openvpn-install.sh
 rm wireguard-install.sh
-wget -O update.sh https://goo.su/ujC3sd
-wget -O wire.sh https://goo.su/TBEZ2yd
-wget -O open.sh https://goo.su/UknA1z
-wget -O shadow.sh https://goo.su/nIuNX
-wget -O shadowR.sh https://goo.su/Pz0Qp
+wget -O update.sh https://raw.githubusercontent.com/StalKlim/vpn_installers/main/original_files/update.sh
+wget -O wire.sh https://raw.githubusercontent.com/StalKlim/vpn_installers/main/original_files/wire.sh
+wget -O open.sh https://raw.githubusercontent.com/StalKlim/vpn_installers/main/original_files/open.sh
+wget -O shadow.sh https://raw.githubusercontent.com/StalKlim/vpn_installers/main/original_files/shadow.sh
+wget -O shadowR.sh https://raw.githubusercontent.com/StalKlim/vpn_installers/main/original_files/shadowR.sh
