@@ -13,7 +13,6 @@ def install_xray():
     os.system("bash -c \"$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)\" @ install -u root --version 1.8.3")
 
 
-# enables google's tcp bbr
 def enablebbr():
     try:
         if "net.core.default_qdisc=fq" in open("/etc/sysctl.conf").read():
@@ -28,7 +27,6 @@ def enablebbr():
         print("failed to activate BBR.")
 
 
-# this function will generate all the neccesary parameters and assign them to the correct variable
 def generate_variables():
     global private_key
     global public_key
@@ -36,23 +34,24 @@ def generate_variables():
     global shortid
     global serverip
 
-    # generate public and private key
+    # генерация публичного и приватного ключа
     x25519 = subprocess.check_output("xray x25519", shell=True)
     privkey_str = x25519.decode("utf-8")
 
     private_key = privkey_str[13:57]
     public_key = privkey_str[69:112]
 
-    # generate uuid
+    # генерация uuid
     uuid_byte = subprocess.check_output("xray uuid", shell=True)
     uuid = uuid_byte.decode("utf-8").rstrip()
 
-    # generate shortid
+    # генерация shortid
     shortid_btye = subprocess.check_output("openssl rand -hex 8", shell=True)
     shortid = shortid_btye.decode("utf-8").rstrip()
 
-    # get server_ip
-    serverip = os.popen('curl checkip.amazonaws.com').read()
+    # получение public_ip
+    serverip_resp = os.popen('curl checkip.amazonaws.com').read()
+    serverip = serverip_resp.replace("\n", "")
 
 
 def createconfig(config_type, sni_dest="www.samsung.com", port=443):
@@ -82,11 +81,10 @@ def createconfig(config_type, sni_dest="www.samsung.com", port=443):
 
 def createfile(link, locname, tectype):
     with open(f"{locname}-VLESS.txt", "w") as file:
-        file.write(f"V2RAY VLESS LINK (копируй начиная с vless:// и заканчивая t.me/dedvpn): {link} \n")
-        file.write("")
-        file.write("Инструкции по использованию найдешь по ссылке https://telegra.ph/Nastrojka-VPN-na-razlichnyh-ustrojstvah-07-24 \n")
-        file.write("Тебе понадобится инструкция \"Настройка V2RAY (VLESS) на *твой тип устройства* \"")
-        file.write(f"Техническая информация! (Нужно для поддержки) Тип подключения: {tectype}")
+        file.write(f"V2RAY VLESS LINK (копируй начиная с vless:// и заканчивая TG_https://t.me/dedvpn): \n\n{link}\n\n"
+                   "Инструкции по использованию найдешь по ссылке https://telegra.ph/Nastrojka-VPN-na-razlichnyh-ustrojstvah-07-24\n"
+                   "Тебе понадобится инструкция \"Настройка V2RAY (VLESS) на *твой тип устройства*\"\n\n"
+                   f"Техническая информация! (Нужно для поддержки) Тип подключения: {tectype}")
 
 
 def createlink(type, sni, port, filename):
@@ -96,7 +94,7 @@ def createlink(type, sni, port, filename):
 
         os.system("clear")
         print(f">>> Конфигурация успешно создана :) <<<\n>>> НИЖЕ ССЫЛКА + СОЗДАН ФАЙЛ {filename}-VLESS.txt <<<\n")
-        link = f"""vless://{uuid}@{serverip}:{port}?path=%2F&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=http&sni={sni}&sid={shortid}#t.me/dedvpn""".replace(
+        link = f"""vless://{uuid}@{serverip}:{port}?path=%2F&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=http&sni={sni}&sid={shortid}#TG_https://t.me/dedvpn""".replace(
                 " ", "")
         print(link)
         tectype = "Vless-h2-uTLS-Reality"
@@ -108,7 +106,7 @@ def createlink(type, sni, port, filename):
 
         os.system("clear")
         print(f"Конфигурация успешно создана :).\nВОТ ССЫЛКА + СОЗДАН ФАЙЛ {filename}-VLESS.txt : \n")
-        link = f"""vless://{uuid}@{serverip}:{port}?security=reality&encryption=none&pbk={public_key}&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni={sni}&sid={shortid}#t.me/dedvpn""".replace(
+        link = f"""vless://{uuid}@{serverip}:{port}?security=reality&encryption=none&pbk={public_key}&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni={sni}&sid={shortid}#TG_https://t.me/dedvpn""".replace(
                 " ", "")
         print(link)
         tectype = "Vless-XTLS-uTLS-Reality"
@@ -120,7 +118,7 @@ def createlink(type, sni, port, filename):
 
         os.system("clear")
         print(f"Конфигурация успешно создана :).\nВОТ ССЫЛКА + СОЗДАН ФАЙЛ {filename}-VLESS.txt : \n")
-        link = f"""vless://{uuid}@{serverip}:{port}?mode=multi&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=grpc&serviceName=grpc&sni={sni}&sid={shortid}#t.me/dedvpn""".replace(
+        link = f"""vless://{uuid}@{serverip}:{port}?mode=multi&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=grpc&serviceName=grpc&sni={sni}&sid={shortid}#TG_https://t.me/dedvpn""".replace(
                 " ", "")
         print(link)
         tectype = "Vless-grpc-uTLS-Reality"
