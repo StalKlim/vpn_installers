@@ -3,11 +3,9 @@ import os
 import re
 import subprocess
 
-import requests
-
-xtls_path = "vless/configxtls.json"
-h2_path = "vless/configh2.json"
-grpc_path = "vless/configgrpc.json"
+xtls_path = "confvl/configxtls.json"
+h2_path = "confvl/configh2.json"
+grpc_path = "confvl/configgrpc.json"
 config_path = "/usr/local/etc/xray/config.json"
 
 
@@ -54,8 +52,7 @@ def generate_variables():
     shortid = shortid_btye.decode("utf-8").rstrip()
 
     # get server_ip
-    serverip_resp = requests.get('http://ip1.dynupdate.no-ip.com')
-    serverip = serverip_resp.text
+    serverip = os.popen('curl checkip.amazonaws.com').read()
 
 
 def createconfig(config_type, sni_dest="www.samsung.com", port=443):
