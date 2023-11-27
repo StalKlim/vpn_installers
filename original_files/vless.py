@@ -1,6 +1,5 @@
 import json
 import os
-import re
 import subprocess
 
 xtls_path = "confvl/configxtls.json"
@@ -10,7 +9,7 @@ config_path = "/usr/local/etc/xray/config.json"
 
 
 def install_xray():
-    os.system("bash -c \"$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)\" @ install -u root --version 1.8.3")
+    os.system('bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u root --version 1.8.3')
 
 
 def enablebbr():
