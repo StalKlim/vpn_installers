@@ -93,7 +93,7 @@ def createlink(type, sni, port, filename):
 
         os.system("clear")
         print(f">>> Конфигурация успешно создана :) <<<\n>>> НИЖЕ ССЫЛКА + СОЗДАН ФАЙЛ {filename}-VLESS.txt <<<\n")
-        link = f"""vless://{uuid}@{serverip}:{port}?path=%2F&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=http&sni={sni}&sid={shortid}#TG_https://t.me/dedvpn""".replace(
+        link = f"""vless://{uuid}@{serverip}:{port}?path=%2F&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=http&sni={sni}&sid={shortid}#{filename}_TG_https://t.me/dedvpn""".replace(
                 " ", "")
         print(link)
         tectype = "Vless-h2-uTLS-Reality"
@@ -105,7 +105,7 @@ def createlink(type, sni, port, filename):
 
         os.system("clear")
         print(f"Конфигурация успешно создана :).\nВОТ ССЫЛКА + СОЗДАН ФАЙЛ {filename}-VLESS.txt : \n")
-        link = f"""vless://{uuid}@{serverip}:{port}?security=reality&encryption=none&pbk={public_key}&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni={sni}&sid={shortid}#TG_https://t.me/dedvpn""".replace(
+        link = f"""vless://{uuid}@{serverip}:{port}?security=reality&encryption=none&pbk={public_key}&headerType=none&fp=chrome&spx=%2F&type=tcp&flow=xtls-rprx-vision&sni={sni}&sid={shortid}#{filename}_TG_https://t.me/dedvpn""".replace(
                 " ", "")
         print(link)
         tectype = "Vless-XTLS-uTLS-Reality"
@@ -117,7 +117,7 @@ def createlink(type, sni, port, filename):
 
         os.system("clear")
         print(f"Конфигурация успешно создана :).\nВОТ ССЫЛКА + СОЗДАН ФАЙЛ {filename}-VLESS.txt : \n")
-        link = f"""vless://{uuid}@{serverip}:{port}?mode=multi&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=grpc&serviceName=grpc&sni={sni}&sid={shortid}#TG_https://t.me/dedvpn""".replace(
+        link = f"""vless://{uuid}@{serverip}:{port}?mode=multi&security=reality&encryption=none&pbk={public_key}&fp=chrome&type=grpc&serviceName=grpc&sni={sni}&sid={shortid}#{filename}_TG_https://t.me/dedvpn""".replace(
                 " ", "")
         print(link)
         tectype = "Vless-grpc-uTLS-Reality"
