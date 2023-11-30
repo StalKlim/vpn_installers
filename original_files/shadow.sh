@@ -66,7 +66,7 @@ function config_info() {
 	echo -e "${Yellow}---------------------------------------${Off}"
 	echo 
 	echo -e "${Green}Your shadowsocks proxy configuration:${Off}"
-	echo -e "${Yellow}URL:${Off} ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT"
+	echo -e "${Yellow}URL:${Off} ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT#${SRVNAME}_TG_t.me/dedvpn"
 	echo
 	echo -e "${Yellow}Windows Client :${Off} https://github.com/shadowsocks/shadowsocks-windows/releases"
 	echo -e "${Yellow}Android Client :${Off} https://play.google.com/store/apps/details?id=com.github.shadowsocks"
@@ -78,7 +78,7 @@ function config_info() {
 	echo -e "${Yellow}Port    :${Off} $PORT "
 	echo -e "${Yellow}Password:${Off} $PASSWORD "
 	echo -e "${Yellow}---------------------------------------${Off}"
-	echo -e "SHADOWSOCKS LINK: ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT \nИнструкция по установке и настройке ShadowSocks по ссылке https://telegra.ph/Nastrojka-VPN-na-razlichnyh-ustrojstvah-07-24" > "$SRVNAME".txt
+	echo -e "SHADOWSOCKS LINK: ss://$(generate_hash chacha20-ietf-poly1305 $PASSWORD)@$IP:$PORT#${SRVNAME}_TG_t.me/dedvpn \nИнструкция по установке и настройке ShadowSocks по ссылке https://telegra.ph/Nastrojka-VPN-na-razlichnyh-ustrojstvah-07-24" > "$SRVNAME"-SS.txt
 }
 if [ -f "/etc/debian_version" ]; then
 	DEBIAN_FRONTEND=noninteractive apt-get update
